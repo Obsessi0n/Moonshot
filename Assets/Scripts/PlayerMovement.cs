@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     bool isHoldingSpace;
     float jumpTimeCounter;
     float lastTimeGrounded;
-
+    private PlayerAnimation pAnimation;
     //Public
     [Header("Player Movement")]
     [Tooltip("Speed at which the player moves.")]
@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Others")]
     public Transform isGroundedTransform;
     public LayerMask GroundLayer;
-
+    
     
 
     
@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+        pAnimation = GetComponent<PlayerAnimation>();
     }
 
     private void Update()
@@ -73,6 +74,12 @@ public class PlayerMovement : MonoBehaviour
     {
         float xAxisInput = Input.GetAxisRaw("Horizontal");
         float moveAmount = xAxisInput * movementSpeed;
+        if (moveAmount > 0)
+            pAnimation.Moving("Right");
+        else if (moveAmount < 0)
+            pAnimation.Moving("Left");
+        else
+            pAnimation.Idle();
 
         rigidbody2D.velocity = new Vector2(moveAmount, rigidbody2D.velocity.y);
     }
