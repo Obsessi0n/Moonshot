@@ -124,6 +124,15 @@ public class PlayerMovement : MonoBehaviour
         if (rigidbody2D.velocity.y < 0)
         {
             rigidbody2D.velocity += Vector2.up * Physics2D.gravity * (fallMultiplier - 1) * Time.deltaTime;
+            pAnimation.Falling();
+        }
+        else if(rigidbody2D.velocity.y > 0 )
+        {
+            pAnimation.Jumping();
+        }
+        else
+        {
+            pAnimation.NotFalling();
         }
     }
 
