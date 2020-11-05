@@ -7,11 +7,15 @@ public class PlayerRecall : MonoBehaviour
 {
 
     bool isRewinding = false;
+    bool isRecording = false;
 
     public float recordTime = 10f;
     List<Vector3> positions;
 
     public GameObject playerHologram;
+
+    public LayerMask Props;
+
 
     void Start()
     {
@@ -21,17 +25,45 @@ public class PlayerRecall : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        
+
+
+        if (Input.GetKeyDown(KeyCode.Return) && isRecording && CheckHologramPCCollision())
+        {
+            isRecording = false;
             StartRewind();
-        //if (Input.GetKeyUp(KeyCode.Return))
-         //   StopRewind();
+        }
+
+        else if (Input.GetKeyDown(KeyCode.Return) && CheckHologramPCCollision())
+        {
+            isRecording = true;
+        }
+
+    }
+
+
+    bool CheckHologramPCCollision()
+    {
+        Collider2D colliders = Physics2D.OverlapCircle(transform.position, 1f, Props);
+        
+        if(colliders != null)
+        {
+            
+            if (colliders.name == "HologramPC")
+            {
+                return true;
+
+            }
+           
+        }
+        return false;
     }
 
     private void FixedUpdate()
     {
         if (isRewinding)
             Rewind();
-        else
+        else if(isRecording)
             Record();
     }
 
@@ -61,7 +93,7 @@ public class PlayerRecall : MonoBehaviour
 
     void StartRewind()
     {
-        transform.position = new Vector3(-6.36000013f, 0, 0);
+       
         playerHologram.SetActive(true);
         isRewinding = true;
     }
@@ -71,4 +103,7 @@ public class PlayerRecall : MonoBehaviour
         isRewinding = false;
         playerHologram.SetActive(false);
     }
+
+
+
 }
