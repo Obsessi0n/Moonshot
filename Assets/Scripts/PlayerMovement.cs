@@ -121,12 +121,12 @@ public class PlayerMovement : MonoBehaviour
 
     void ImproveJump()
     {
-        if (rigidbody2D.velocity.y < 0)
+        if (Math.Round(rigidbody2D.velocity.y, 2) < 0)
         {
             rigidbody2D.velocity += Vector2.up * Physics2D.gravity * (fallMultiplier - 1) * Time.deltaTime;
             pAnimation.Falling();
         }
-        else if(rigidbody2D.velocity.y > 0 )
+        else if(Math.Round(rigidbody2D.velocity.y, 2) > 0 )
         {
             pAnimation.Jumping();
         }

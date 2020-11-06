@@ -31,18 +31,23 @@ public class PlayerAnimation : MonoBehaviour
     public void Idle()
     {
         animator.SetBool("isRunning", false);
+        animator.SetBool("isJumping", false);
+        animator.SetBool("isFalling", false);
 
     }
 
     public void Jumping()
     {
         animator.SetBool("isJumping", true);
+        animator.SetBool("isFalling", false);
+        animator.SetBool("isRunning", false);
     }
 
     public void Falling()
     {
         animator.SetBool("isJumping", false);
         animator.SetBool("isFalling", true);
+        animator.SetBool("isRunning", false);
     }
 
     public void NotFalling()
