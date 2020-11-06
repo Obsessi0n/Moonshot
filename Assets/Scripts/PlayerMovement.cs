@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     float jumpTimeCounter;
     float lastTimeGrounded;
     private PlayerAnimation pAnimation;
+    private Animator animator;
     private float currentSpeed;
     //Public
     [Header("Player Movement")]
@@ -41,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         pAnimation = GetComponent<PlayerAnimation>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -96,9 +98,10 @@ public class PlayerMovement : MonoBehaviour
             pAnimation.Idle();
             currentSpeed = movementSpeed;
         }
-            
 
-        Debug.Log(moveAmount);
+       
+        animator.speed = Mathf.Abs(moveAmount/maxSpeed);
+
         rigidbody2D.velocity = new Vector2(moveAmount, rigidbody2D.velocity.y);
     }
 
