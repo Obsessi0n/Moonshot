@@ -12,11 +12,13 @@ public class PlayerMovement : MonoBehaviour
     float jumpTimeCounter;
     float lastTimeGrounded;
     private PlayerAnimation pAnimation;
+    private float currentSpeed;
     //Public
     [Header("Player Movement")]
     [Tooltip("Speed at which the player moves.")]
     public float movementSpeed = 3f;
-
+    public float maxSpeed = 9f;
+    public float incrementAcceleration = 0.01f;
     [Header("Player Jump")]
     [Tooltip("Force of jump.")]
     public float jumpForce = 4f;
@@ -73,14 +75,30 @@ public class PlayerMovement : MonoBehaviour
     void MovePlayer()
     {
         float xAxisInput = Input.GetAxisRaw("Horizontal");
-        float moveAmount = xAxisInput * movementSpeed;
-        if (moveAmount > 0)
-            pAnimation.Moving("Right");
-        else if (moveAmount < 0)
-            pAnimation.Moving("Left");
-        else
-            pAnimation.Idle();
+        float moveAmount = xAxisInput * maxSpeed;
 
+        if (moveAmount > 0)
+        {
+            pAnimation.Moving("Right");
+            currentSpeed += incrementAcceleration;
+            moveAmount= Mathf.Clamp(moveAmount, 0, currentSpeed);
+        }
+            
+        else if (moveAmount < 0)
+        {
+            pAnimation.Moving("Left");
+            currentSpeed += incrementAcceleration;
+            moveAmount = Mathf.Clamp(moveAmount, -currentSpeed, 0);
+        }
+
+        else
+        {
+            pAnimation.Idle();
+            currentSpeed = movementSpeed;
+        }
+            
+
+        Debug.Log(moveAmount);
         rigidbody2D.velocity = new Vector2(moveAmount, rigidbody2D.velocity.y);
     }
 
