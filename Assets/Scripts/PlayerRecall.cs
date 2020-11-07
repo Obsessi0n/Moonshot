@@ -39,24 +39,43 @@ public class PlayerRecall : MonoBehaviour
             isRecording = true;
         }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Interact();
+        }
     }
 
+    void Interact()
+    {
+        Collider2D colliders = Physics2D.OverlapCircle(transform.position, 1f, Props);
+
+        if (colliders != null)
+        {
+
+            if (colliders.name == "Portal")
+            {
+
+                colliders.GetComponent<Portal>().Teleport();
+            }
+
+        }
+    }
 
     bool CheckHologramPCCollision()
     {
-        Collider2D colliders = Physics2D.OverlapCircle(transform.position, 1f, Props);
+    Collider2D colliders = Physics2D.OverlapCircle(transform.position, 1f, Props);
+    
+    if(colliders != null)
+    {
         
-        if(colliders != null)
+        if (colliders.name == "HologramPC")
         {
-            
-            if (colliders.name == "HologramPC")
-            {
-                return true;
+            return true;
 
-            }
-           
         }
-        return false;
+       
+    }
+    return false;
     }
 
     private void FixedUpdate()

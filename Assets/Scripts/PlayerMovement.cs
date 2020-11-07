@@ -33,10 +33,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Others")]
     public Transform isGroundedTransform;
     public LayerMask GroundLayer;
-    
-    
 
-    
+
+
 
     private void Start()
     {
@@ -51,7 +50,8 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();
         JumpPlayer();
         ImproveJump();
-        
+
+
     }
 
     private void CheckIfGrounded()
