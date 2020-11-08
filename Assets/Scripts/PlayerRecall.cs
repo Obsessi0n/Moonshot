@@ -57,6 +57,10 @@ public class PlayerRecall : MonoBehaviour
 
                 colliders.GetComponent<Portal>().Teleport();
             }
+            else if(colliders.name == "Lever")
+            {
+                colliders.GetComponent<Lever>().Activate();
+            }
 
         }
     }
